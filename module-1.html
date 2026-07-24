@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Модуль 1 — Основы кибербезопасности</title>
+<script src="https://alcdn.msauth.net/browser/3.2.2/js/msal-browser.min.js"></script>
+<style>
+  :root {
+    --navy: #1E2761;
+    --navy-deep: #161C4D;
+    --ice: #CADCFC;
+    --ice-soft: #EEF3FE;
+    --accent: #3454D1;
+    --good: #1F8A5B;
+    --good-bg: #E7F6EE;
+    --bad: #C23B3B;
+    --bad-bg: #FCEAEA;
+    --text: #1B1B2F;
+    --muted: #5B6172;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+    color: var(--text);
+    background: #fff;
+  }
+  .nav {
+    padding: 16px 24px;
+    border-bottom: 1px solid #EEF1F8;
+  }
+  .nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+  .nav a:hover { color: var(--navy); }
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+  .eyebrow {
+    display: inline-flex;
+    background: var(--ice-soft);
+    color: var(--navy);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 34px;
+    line-height: 1.2;
+    color: var(--navy);
+    margin: 0 0 10px 0;
+  }
+  .subtitle {
+    font-size: 16px;
+    color: var(--muted);
+    margin: 0 0 28px 0;
+    max-width: 640px;
+  }
+  .video-wrap {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: var(--navy-deep);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 24px rgba(30, 39, 97, 0.18);
+  }
+  .video-wrap iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: 0;
+  }
+  h2 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 20px;
+    color: var(--navy);
+    margin: 0 0 14px 0;
+  }
+  .body-text {
+    font-size: 15px;
+    line-height: 1.65;
+    margin: 0 0 28px 0;
+  }
+  .points {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 40px 0;
+    display: grid;
+    gap: 12px;
+  }
+  .points li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--ice-soft);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+  .points li::before {
+    content: "";
+    flex: none;
+    width: 8px; height: 8px;
+    margin-top: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  /* Quiz styles remain the same */
+  .quiz-card {
+    background: var(--navy);
+    border-radius: 16px;
+    padding: 30px 32px;
+  }
+  /* ... (все стили quiz оставляю как были) ... */
+</style>
+</head>
+<body>
+  <div class="nav"><a href="index.html">← Ко всем модулям</a></div>
+
+  <div class="page">
+    <span class="eyebrow">Модуль 1 из 6</span>
+    <h1>Основы кибербезопасности и роль сотрудника</h1>
+    <p class="subtitle">Зачем это касается лично каждого, а не только IT-отдела — 8 минут видео + короткий тест.</p>
+
+    <!-- Видео и контент (оставил как было) -->
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" title="Видео модуля" allowfullscreen></iframe>
+    </div>
+
+    <!-- ... остальной контент модуля (тезисы, quiz и т.д.) ... -->
+
+    <div class="footer-note">Есть вопросы по модулю? Напишите в чат «Onboarding» в Teams.</p>
+  </div>
+
+  <script src="course.js"></script>
+  <script>
+    CourseTracker.requireAuth(function (account) {
+      console.log("Авторизован:", account.name);
+    });
+
+    (function () {
+      // Весь твой код quiz (checkBtn, retryBtn и т.д.) — оставляем без изменений
+      var checkBtn = document.getElementById('check-btn');
+      var retryBtn = document.getElementById('retry-btn');
+      var nextBtn = document.getElementById('next-btn');
+      var finishBtn = document.getElementById('finish-btn');
+      // ... весь остальной код quiz ...
+      // В конце checkBtn.addEventListener используй CourseTracker.saveModuleResult
+    })();
+  </script>
+</body>
+</html>

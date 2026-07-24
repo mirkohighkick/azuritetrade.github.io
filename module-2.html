@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Модуль 2 — Фишинг и социальная инженерия</title>
+<script src="https://alcdn.msauth.net/browser/3.2.2/js/msal-browser.min.js"></script>
+<style>
+  :root {
+    --navy: #1E2761;
+    --navy-deep: #161C4D;
+    --ice: #CADCFC;
+    --ice-soft: #EEF3FE;
+    --accent: #3454D1;
+    --good: #1F8A5B;
+    --good-bg: #E7F6EE;
+    --bad: #C23B3B;
+    --bad-bg: #FCEAEA;
+    --text: #1B1B2F;
+    --muted: #5B6172;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+    color: var(--text);
+    background: #fff;
+  }
+  .nav {
+    padding: 16px 24px;
+    border-bottom: 1px solid #EEF1F8;
+  }
+  .nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+  .nav a:hover { color: var(--navy); }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    background: var(--ice-soft);
+    color: var(--navy);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 34px;
+    line-height: 1.2;
+    color: var(--navy);
+    margin: 0 0 10px 0;
+  }
+  .subtitle {
+    font-size: 16px;
+    color: var(--muted);
+    margin: 0 0 28px 0;
+    max-width: 640px;
+  }
+
+  .video-wrap {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: var(--navy-deep);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 24px rgba(30, 39, 97, 0.18);
+  }
+  .video-wrap iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: 0;
+  }
+
+  h2 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 20px;
+    color: var(--navy);
+    margin: 0 0 14px 0;
+  }
+  .body-text {
+    font-size: 15px;
+    line-height: 1.65;
+    margin: 0 0 28px 0;
+  }
+  .points {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 40px 0;
+    display: grid;
+    gap: 12px;
+  }
+  .points li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--ice-soft);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+  .points li::before {
+    content: "";
+    flex: none;
+    width: 8px; height: 8px;
+    margin-top: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* --- Quiz --- */
+  .quiz-card {
+    background: var(--navy);
+    border-radius: 16px;
+    padding: 30px 32px;
+  }
+  .quiz-head h3 {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: #fff;
+    font-size: 21px;
+    margin: 0 0 6px 0;
+  }
+  .quiz-head p {
+    color: var(--ice);
+    font-size: 13.5px;
+    margin: 0 0 26px 0;
+  }
+  .question {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(202,220,252,0.18);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+  .question-title {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0 0 14px 0;
+    line-height: 1.4;
+  }
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    cursor: pointer;
+  }
+  .option:hover { background: rgba(255,255,255,0.06); }
+  .option input { margin-top: 3px; accent-color: var(--ice); flex: none; }
+  .option span { color: var(--ice-soft); font-size: 14px; line-height: 1.45; }
+  .option.is-correct { background: var(--good-bg); }
+  .option.is-correct span { color: var(--good); font-weight: 700; }
+  .option.is-wrong { background: var(--bad-bg); }
+  .option.is-wrong span { color: var(--bad); font-weight: 700; }
+  .explain {
+    display: none;
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.06);
+    color: var(--ice-soft);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .explain.is-shown { display: block; }
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 22px;
+  }
+  .btn {
+    background: var(--ice);
+    color: var(--navy);
+    border: none;
+    font-weight: 700;
+    font-size: 14.5px;
+    padding: 13px 28px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .btn.secondary {
+    background: transparent;
+    color: var(--ice);
+    border: 1px solid rgba(202,220,252,0.4);
+  }
+  .result { display: none; color: #fff; font-size: 14.5px; font-weight: 700; }
+  .result.is-shown { display: block; }
+  .hint { color: var(--ice); font-size: 12.5px; opacity: 0.75; }
+
+  #final-summary { margin-top: 24px; }
+  .final-score-big {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: #fff;
+    margin: 4px 0 22px 0;
+  }
+  .final-breakdown { margin-bottom: 24px; }
+  .final-note { color: var(--ice); font-size: 13px; margin: 0 0 22px 0; }
+  .final-home-btn { text-decoration: none; display: inline-block; }
+
+  .footer-note {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12.5px;
+    margin-top: 22px;
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 26px; }
+    .quiz-card { padding: 22px 18px; }
+    .actions { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="nav"><a href="index.html">← Ко всем модулям</a></div>
+
+  <!-- Скрытая форма — нужна, чтобы Netlify обнаружил её при публикации и начал принимать отправки.
+       Реальная отправка происходит один раз, при нажатии "Завершить обучение" на модуле 6. -->
+  <form name="course-results" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="text" name="name" />
+    <input type="text" name="modules_completed" />
+    <input type="text" name="overall_score" />
+    <input type="text" name="overall_percent" />
+    <input type="text" name="breakdown" />
+    <input type="text" name="date" />
+    <input name="bot-field" />
+  </form>
+
+  <div class="page">
+    <span class="eyebrow">Модуль 2 из 6</span>
+    <h1>Фишинг и социальная инженерия</h1>
+    <p class="subtitle">Как распознавать и не попадаться на манипуляции — 7 минут видео + короткий тест.</p>
+
+    <!-- ИЗМЕНИТЬ ЗДЕСЬ: замените YOUR_VIDEO_ID на реальный ID видео с YouTube -->
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" title="Видео модуля" allowfullscreen></iframe>
+    </div>
+
+    <h2>О чём этот модуль</h2>
+    <p class="body-text">
+      В этом модуле вы научитесь распознавать фишинговые письма и другие формы социальной инженерии —
+      не только по почте, но и в звонках и сообщениях. Разберём реальные примеры и признаки, на которые
+      стоит обращать внимание, а также — что делать, если письмо или звонок показались подозрительными.
+    </p>
+
+    <h2>Ключевые тезисы</h2>
+    <ul class="points">
+      <li>Фишинговое письмо часто маскируется под знакомого отправителя, но содержит поддельную ссылку</li>
+      <li>Целевой фишинг (spear phishing) выглядит персонализированным — знает ваше имя, должность, контекст</li>
+      <li>Социальная инженерия работает не только через письма: звонки и сообщения "от IT" или "от руководителя" — тоже атака</li>
+      <li>Главные тревожные сигналы: срочность, давление, просьба обойти обычный процесс</li>
+    </ul>
+
+    <div class="quiz-card">
+      <div class="quiz-head">
+        <h3>Проверьте себя</h3>
+        <p>Выберите один вариант в каждом вопросе, затем нажмите «Проверить ответы»</p>
+      </div>
+
+      <form id="quiz-form">
+        
+        <div class="question" data-correct="0">
+          <p class="question-title">1. Какой признак чаще всего указывает на фишинговое письмо?</p>
+          <label class="option"><input type="radio" name="q1" value="0"><span>Просьба срочно перейти по ссылке и ввести пароль</span></label>
+          <label class="option"><input type="radio" name="q1" value="1"><span>Обычное деловое письмо от коллеги без ссылок</span></label>
+          <label class="option"><input type="radio" name="q1" value="2"><span>Письмо с корректной подписью отдела</span></label>
+          <div class="explain">Верно: срочность и просьба ввести учётные данные по ссылке — классический признак фишинга. Легитимные сервисы почти никогда не просят так делать.</div>
+        </div>
+
+        <div class="question" data-correct="1">
+          <p class="question-title">2. Чем целевой фишинг (spear phishing) отличается от обычного?</p>
+          <label class="option"><input type="radio" name="q2" value="0"><span>Рассылается всем подряд без персонализации</span></label>
+          <label class="option"><input type="radio" name="q2" value="1"><span>Специально подготовлен под конкретного человека или отдел</span></label>
+          <label class="option"><input type="radio" name="q2" value="2"><span>Всегда содержит видимый вирус-вложение</span></label>
+          <div class="explain">Верно: целевой фишинг использует реальные детали о вас — имя, должность, проекты — поэтому выглядит более убедительно, чем массовая рассылка.</div>
+        </div>
+
+        <div class="question" data-correct="1">
+          <p class="question-title">3. Вам звонит "сотрудник IT" и просит продиктовать код из SMS. Что делать?</p>
+          <label class="option"><input type="radio" name="q3" value="0"><span>Продиктовать — раз человек представился IT-специалистом</span></label>
+          <label class="option"><input type="radio" name="q3" value="1"><span>Отказать и перепроверить запрос по официальному каналу</span></label>
+          <label class="option"><input type="radio" name="q3" value="2"><span>Перезвонить на номер, с которого поступил звонок</span></label>
+          <div class="explain">Верно: настоящий IT-отдел никогда не запросит код подтверждения по телефону. Лучше положить трубку и написать в официальный чат поддержки.</div>
+        </div>
+
+        <div class="question" data-correct="1">
+          <p class="question-title">4. Что из перечисленного — тревожный сигнал в сообщении?</p>
+          <label class="option"><input type="radio" name="q4" value="0"><span>Спокойный тон и достаточно времени на ответ</span></label>
+          <label class="option"><input type="radio" name="q4" value="1"><span>Давление, срочность, просьба обойти обычный процесс</span></label>
+          <label class="option"><input type="radio" name="q4" value="2"><span>Подпись с полным именем отправителя</span></label>
+          <div class="explain">Верно: атакующие искусственно создают ощущение срочности, чтобы вы действовали быстро и не успели проверить детали.</div>
+        </div>
+
+
+        <div class="actions">
+          <button type="button" id="check-btn" class="btn">Проверить ответы</button>
+          <button type="button" id="retry-btn" class="btn secondary" style="display:none;">Пройти ещё раз</button>
+          <button type="button" id="next-btn" class="btn" style="display:none;">Вернуться к модулям →</button>
+          <button type="button" id="finish-btn" class="btn" style="display:none;">Завершить обучение</button>
+          <span id="result" class="result"></span>
+        </div>
+        <p class="hint">Результат модуля сохраняется по ходу курса. Итог по всем модулям отправляется HR одним письмом после завершения курса (модуль 6).</p>
+      </form>
+    </div>
+
+    <div class="quiz-card" id="final-summary" style="display:none;">
+      <div class="quiz-head">
+        <h3>Курс завершён 🎉</h3>
+        <p>Ваш итоговый результат по всем пройденным модулям:</p>
+      </div>
+      <p class="final-score-big"></p>
+      <ul class="points final-breakdown"></ul>
+      <p class="final-note">Результаты отправлены HR. Спасибо за прохождение курса!</p>
+      <a href="index.html" class="btn final-home-btn">На главную</a>
+    </div>
+
+    <p class="footer-note">Есть вопросы по модулю? Напишите в чат «Onboarding» в Teams.</p>
+  </div>
+
+  <script src="course.js"></script>
+  <script>
+    CourseTracker.requireName(function (name) {
+      // имя уже сохранено (или было сохранено раньше) — страница используется как обычно
+    });
+
+    (function () {
+      var checkBtn = document.getElementById('check-btn');
+      var retryBtn = document.getElementById('retry-btn');
+      var nextBtn = document.getElementById('next-btn');
+      var finishBtn = document.getElementById('finish-btn');
+      var summaryBlock = document.getElementById('final-summary');
+      var quizCard = document.querySelector('.quiz-card');
+      var resultEl = document.getElementById('result');
+      var questions = document.querySelectorAll('.question');
+
+      var MODULE_ID = 'module-2';
+      var MODULE_LABEL = 'Модуль 2 — Фишинг и социальная инженерия';
+      var IS_FINAL = false;
+
+      nextBtn.addEventListener('click', function () {
+        window.location.href = 'index.html';
+      });
+
+      finishBtn.addEventListener('click', function () {
+        finishBtn.disabled = true;
+        finishBtn.textContent = 'Отправляем…';
+        CourseTracker.submitFinalResults().then(function (summary) {
+          quizCard.style.display = 'none';
+          summaryBlock.style.display = 'block';
+          summaryBlock.querySelector('.final-score-big').textContent =
+            summary.totalCorrect + ' из ' + summary.totalQuestions + ' (' + summary.pct + '%)';
+          var listEl = summaryBlock.querySelector('.final-breakdown');
+          listEl.innerHTML = '';
+          summary.breakdown.forEach(function (row) {
+            var li = document.createElement('li');
+            li.textContent = row.label + ' — ' + row.correct + '/' + row.total;
+            listEl.appendChild(li);
+          });
+        });
+      });
+
+      checkBtn.addEventListener('click', function () {
+        var answered = 0, correct = 0;
+        questions.forEach(function (q) {
+          var qname = q.querySelector('input[type=radio]').name;
+          var selected = q.querySelector('input[name="' + qname + '"]:checked');
+          var correctIndex = q.getAttribute('data-correct');
+          var options = q.querySelectorAll('.option');
+          var explain = q.querySelector('.explain');
+
+          if (selected) {
+            answered++;
+            options.forEach(function (opt, i) {
+              var input = opt.querySelector('input');
+              opt.classList.remove('is-correct', 'is-wrong');
+              if (String(i) === correctIndex) opt.classList.add('is-correct');
+              else if (input === selected) opt.classList.add('is-wrong');
+              input.disabled = true;
+            });
+            if (String(selected.value) === correctIndex) correct++;
+            explain.classList.add('is-shown');
+          }
+        });
+
+        if (answered < questions.length) {
+          resultEl.textContent = 'Ответьте на все вопросы (' + answered + ' из ' + questions.length + ')';
+          resultEl.classList.add('is-shown');
+          return;
+        }
+
+        var pct = Math.round((correct / questions.length) * 100);
+        var msg = correct === questions.length
+          ? 'Отлично! ' + correct + ' из ' + questions.length + ' (100%)'
+          : pct >= 70
+            ? 'Хороший результат: ' + correct + ' из ' + questions.length + ' (' + pct + '%)'
+            : 'Результат: ' + correct + ' из ' + questions.length + ' (' + pct + '%) — рекомендуем пересмотреть материал модуля';
+
+        resultEl.textContent = msg;
+        resultEl.classList.add('is-shown');
+        checkBtn.style.display = 'none';
+        retryBtn.style.display = 'inline-block';
+
+        CourseTracker.saveModuleResult(MODULE_ID, MODULE_LABEL, correct, questions.length);
+
+var passed = pct >= (CourseTracker.PASS_THRESHOLD * 100);
+
+if (passed) {
+  if (IS_FINAL) {
+    finishBtn.style.display = 'inline-block';
+  } else {
+    nextBtn.style.display = 'inline-block';
+  }
+} else {
+  resultEl.textContent += '. Нужно набрать минимум 80%, чтобы перейти дальше — нажмите «Пройти ещё раз».';
+}
+      });
+
+      retryBtn.addEventListener('click', function () {
+        questions.forEach(function (q) {
+          q.querySelectorAll('input[type=radio]').forEach(function (input) {
+            input.checked = false;
+            input.disabled = false;
+          });
+          q.querySelectorAll('.option').forEach(function (opt) {
+            opt.classList.remove('is-correct', 'is-wrong');
+          });
+          q.querySelector('.explain').classList.remove('is-shown');
+        });
+        resultEl.classList.remove('is-shown');
+        checkBtn.style.display = 'inline-block';
+        retryBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+        finishBtn.style.display = 'none';
+      });
+    })();
+  </script>
+
+</body>
+</html>
