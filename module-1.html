@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Модуль 1 — Основы кибербезопасности</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="nav">
+    <a class="nav-back" href="index.html">← Ко всем модулям</a>
+    <span class="nav-progress">Модуль <strong>1</strong> из 6</span>
+  </div>
+
+  <div class="page">
+    <h1>Основы кибербезопасности и роль сотрудника</h1>
+    <p class="subtitle">Зачем это касается лично каждого, а не только IT-отдела — 8 минут видео + короткий тест.</p>
+
+    <!-- ИЗМЕНИТЬ ЗДЕСЬ: замените YOUR_VIDEO_ID на реальный ID видео с YouTube -->
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" title="Видео модуля" allowfullscreen></iframe>
+    </div>
+
+    <h2>О чём этот модуль</h2>
+    <p class="body-text">
+      В этом модуле вы узнаете, что такое кибербезопасность простыми словами, почему это ответственность
+      каждого сотрудника, а не только IT-отдела, и какие виды угроз встречаются чаще всего. Также разберём,
+      во что реально обходится компании один инцидент — от простоя в работе до репутационных потерь.
+    </p>
+
+    <h2>Ключевые тезисы</h2>
+    <ul class="points">
+      <li>Кибербезопасность — это не только про технику, но и про повседневные решения каждого сотрудника</li>
+      <li>Основные виды угроз: фишинг, вредоносное ПО, социальная инженерия, утечки данных</li>
+      <li>Целью атаки может стать любой сотрудник, а не только руководство или бухгалтерия</li>
+      <li>Если что-то выглядит подозрительно — лучше сообщить и оказаться неправым, чем промолчать</li>
+    </ul>
+
+    <div class="quiz-card">
+      <div class="quiz-head">
+        <h3>Проверьте себя</h3>
+        <p>Выберите один вариант в каждом вопросе, затем нажмите «Проверить ответы»</p>
+      </div>
+
+      <form id="quiz-form">
+        <div class="question" data-correct="2">
+          <p class="question-title">1. Кто отвечает за кибербезопасность в компании?</p>
+          <label class="option"><input type="radio" name="q1" value="0"><span>Только IT-отдел</span></label>
+          <label class="option"><input type="radio" name="q1" value="1"><span>Только руководство</span></label>
+          <label class="option"><input type="radio" name="q1" value="2"><span>Каждый сотрудник компании</span></label>
+          <div class="explain">Верно: кибербезопасность — общая ответственность. IT настраивает системы, но именно действия каждого сотрудника чаще всего определяют, случится ли инцидент.</div>
+        </div>
+
+        <div class="question" data-correct="2">
+          <p class="question-title">2. Что из перечисленного НЕ является видом киберугрозы?</p>
+          <label class="option"><input type="radio" name="q2" value="0"><span>Фишинг</span></label>
+          <label class="option"><input type="radio" name="q2" value="1"><span>Социальная инженерия</span></label>
+          <label class="option"><input type="radio" name="q2" value="2"><span>Своевременное обновление ПО</span></label>
+          <div class="explain">Верно: обновление ПО — это, наоборот, защитная мера, а не угроза. Она закрывает уязвимости, которыми могли бы воспользоваться атакующие.</div>
+        </div>
+
+        <div class="question" data-correct="1">
+          <p class="question-title">3. Вы получили странное письмо и не уверены, фишинг это или нет. Что делать?</p>
+          <label class="option"><input type="radio" name="q3" value="0"><span>Проигнорировать, если не уверены</span></label>
+          <label class="option"><input type="radio" name="q3" value="1"><span>Сообщить ответственному за ИБ, даже если сомневаетесь</span></label>
+          <label class="option"><input type="radio" name="q3" value="2"><span>Переслать письмо коллегам, чтобы спросить их мнение</span></label>
+          <div class="explain">Верно: лучше сообщить и оказаться неправым, чем промолчать. Пересылка коллегам не решает проблему и может случайно распространить угрозу дальше.</div>
+        </div>
+
+        <div class="question" data-correct="2">
+          <p class="question-title">4. Целью кибератаки на компанию может стать:</p>
+          <label class="option"><input type="radio" name="q4" value="0"><span>Только топ-менеджмент</span></label>
+          <label class="option"><input type="radio" name="q4" value="1"><span>Только бухгалтерия</span></label>
+          <label class="option"><input type="radio" name="q4" value="2"><span>Любой сотрудник</span></label>
+          <div class="explain">Верно: атакующие часто выбирают не самую «важную» цель, а самую доступную — то есть любого сотрудника с доступом к почте или системам.</div>
+        </div>
+
+        <div class="actions">
+          <button type="button" id="check-btn" class="btn">Проверить ответы</button>
+          <button type="button" id="retry-btn" class="btn secondary" style="display:none;">Пройти ещё раз</button>
+          <button type="button" id="next-btn" class="btn" style="display:none;">Вернуться к модулям</button>
+          <button type="button" id="finish-btn" class="btn" style="display:none;">Завершить обучение</button>
+          <span id="result" class="result"></span>
+        </div>
+        <p class="hint">Результат модуля сохраняется по ходу курса. Итог по всем модулям отправляется HR одним письмом после завершения курса (модуль 6).</p>
+      </form>
+    </div>
+
+    <div class="quiz-card" id="final-summary" style="display:none;">
+      <div class="quiz-head">
+        <h3>Курс завершён 🎉</h3>
+        <p>Ваш итоговый результат по всем пройденным модулям:</p>
+      </div>
+      <p class="final-score-big"></p>
+      <ul class="points final-breakdown"></ul>
+      <p class="final-note">Результаты отправлены HR. Спасибо за прохождение курса!</p>
+      <a href="index.html" class="btn final-home-btn">На главную</a>
+    </div>
+
+    <p class="footer-note">Есть вопросы по модулю? Напишите в чат «Onboarding» в Teams.</p>
+  </div>
+
+  <script src="course.js"></script>
+  <script>
+    CourseTracker.requireAuth(function (name) {
+      // имя уже сохранено (или было сохранено раньше) — страница используется как обычно
+    });
+
+    (function () {
+      var checkBtn = document.getElementById('check-btn');
+      var retryBtn = document.getElementById('retry-btn');
+      var nextBtn = document.getElementById('next-btn');
+      var finishBtn = document.getElementById('finish-btn');
+      var summaryBlock = document.getElementById('final-summary');
+      var quizCard = document.querySelector('.quiz-card');
+      var resultEl = document.getElementById('result');
+      var questions = document.querySelectorAll('.question');
+
+      var MODULE_ID = 'module-1';
+      var MODULE_LABEL = 'Модуль 1 — Основы кибербезопасности';
+      var IS_FINAL = false;
+
+      nextBtn.addEventListener('click', function () {
+        window.location.href = 'index.html';
+      });
+
+      finishBtn.addEventListener('click', function () {
+        finishBtn.disabled = true;
+        finishBtn.textContent = 'Отправляем…';
+        CourseTracker.submitFinalResults().then(function (summary) {
+          quizCard.style.display = 'none';
+          summaryBlock.style.display = 'block';
+          summaryBlock.querySelector('.final-score-big').textContent =
+            summary.totalCorrect + ' из ' + summary.totalQuestions + ' (' + summary.pct + '%)';
+          var listEl = summaryBlock.querySelector('.final-breakdown');
+          listEl.innerHTML = '';
+          summary.breakdown.forEach(function (row) {
+            var li = document.createElement('li');
+            li.textContent = row.label + ' — ' + row.correct + '/' + row.total;
+            listEl.appendChild(li);
+          });
+        });
+      });
+
+      checkBtn.addEventListener('click', function () {
+        var answered = 0, correct = 0;
+        questions.forEach(function (q) {
+          var qname = q.querySelector('input[type=radio]').name;
+          var selected = q.querySelector('input[name="' + qname + '"]:checked');
+          var correctIndex = q.getAttribute('data-correct');
+          var options = q.querySelectorAll('.option');
+          var explain = q.querySelector('.explain');
+
+          if (selected) {
+            answered++;
+            options.forEach(function (opt, i) {
+              var input = opt.querySelector('input');
+              opt.classList.remove('is-correct', 'is-wrong');
+              if (String(i) === correctIndex) opt.classList.add('is-correct');
+              else if (input === selected) opt.classList.add('is-wrong');
+              input.disabled = true;
+            });
+            if (String(selected.value) === correctIndex) correct++;
+            explain.classList.add('is-shown');
+          }
+        });
+
+        if (answered < questions.length) {
+          resultEl.textContent = 'Ответьте на все вопросы (' + answered + ' из ' + questions.length + ')';
+          resultEl.classList.add('is-shown');
+          return;
+        }
+
+        var pct = Math.round((correct / questions.length) * 100);
+        var passed = pct >= (CourseTracker.PASS_THRESHOLD * 100);
+        var msg = correct === questions.length
+          ? 'Отлично! ' + correct + ' из ' + questions.length + ' (100%)'
+          : pct >= 70
+            ? 'Хороший результат: ' + correct + ' из ' + questions.length + ' (' + pct + '%)'
+            : 'Результат: ' + correct + ' из ' + questions.length + ' (' + pct + '%) — рекомендуем пересмотреть материал модуля';
+
+        if (!passed) {
+          msg += '. Нужно набрать минимум 80%, чтобы перейти дальше — нажмите «Пройти ещё раз».';
+        }
+
+        resultEl.textContent = msg;
+        resultEl.classList.add('is-shown');
+        checkBtn.style.display = 'none';
+        retryBtn.style.display = 'inline-block';
+
+        CourseTracker.saveModuleResult(MODULE_ID, MODULE_LABEL, correct, questions.length);
+
+        if (passed) {
+          if (IS_FINAL) {
+            finishBtn.style.display = 'inline-block';
+          } else {
+            nextBtn.style.display = 'inline-block';
+          }
+        }
+      });
+
+      retryBtn.addEventListener('click', function () {
+        questions.forEach(function (q) {
+          q.querySelectorAll('input[type=radio]').forEach(function (input) {
+            input.checked = false;
+            input.disabled = false;
+          });
+          q.querySelectorAll('.option').forEach(function (opt) {
+            opt.classList.remove('is-correct', 'is-wrong');
+          });
+          q.querySelector('.explain').classList.remove('is-shown');
+        });
+        resultEl.classList.remove('is-shown');
+        checkBtn.style.display = 'inline-block';
+        retryBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+        finishBtn.style.display = 'none';
+      });
+    })();
+  </script>
+
+</body>
+</html>
