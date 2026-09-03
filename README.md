@@ -1,2 +1,0 @@
-# azuritetrade.github.io
-cybersecuritycourse
