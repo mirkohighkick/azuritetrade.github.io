@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Модуль 3 — Пароли, MFA и защита устройств</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="nav">
+    <a class="nav-back" href="index.html">← Ко всем модулям</a>
+    <span class="nav-progress">Модуль <strong>3</strong> из 6</span>
+  </div>
+
+  <div class="page">
+    <h1>Пароли, MFA и защита устройств</h1>
+    <p class="subtitle">Закрываем самые частые технические дыры — 6 минут видео + короткий тест.</p>
+
+    <!-- ИЗМЕНИТЬ ЗДЕСЬ: замените YOUR_VIDEO_ID на реальный ID видео с YouTube -->
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" title="Видео модуля" allowfullscreen></iframe>
+    </div>
+
+    <h2>О чём этот модуль</h2>
+    <p class="body-text">
+      В этом модуле — практические правила цифровой гигиены: что делает пароль слабым или сильным,
+      зачем нужна многофакторная аутентификация (MFA), как реагировать на подозрительные запросы кода
+      и почему нельзя оставлять рабочий компьютер разблокированным даже "на минутку".
+    </p>
+
+    <h2>Ключевые тезисы</h2>
+    <ul class="points">
+      <li>Надёжный пароль — это длинная случайная фраза, а не "Qwerty123" или дата рождения</li>
+      <li>MFA — это дополнительный уровень защиты, который спасает даже если пароль уже украден</li>
+      <li>Если код MFA просят продиктовать по телефону — это почти всегда попытка мошенничества</li>
+      <li>Блокируйте экран, даже если отходите от рабочего места на минуту</li>
+    </ul>
+
+    <div class="quiz-card">
+      <div class="quiz-head">
+        <h3>Проверьте себя</h3>
+        <p>Выберите один вариант в каждом вопросе, затем нажмите «Проверить ответы»</p>
+      </div>
+
+      <form id="quiz-form">
+        
+        <div class="question" data-correct="2">
+          <p class="question-title">1. Какой из вариантов — надёжный пароль?</p>
+          <label class="option"><input type="radio" name="q1" value="0"><span>Qwerty123</span></label>
+          <label class="option"><input type="radio" name="q1" value="1"><span>Дата рождения</span></label>
+          <label class="option"><input type="radio" name="q1" value="2"><span>Длинная случайная фраза с цифрами и символами</span></label>
+          <div class="explain">Верно: длина и случайность важнее "сложности" отдельных символов. Длинная фраза сложнее для перебора, чем короткий "сложный" пароль.</div>
+        </div>
+
+        <div class="question" data-correct="1">
+          <p class="question-title">2. Зачем нужна многофакторная аутентификация (MFA)?</p>
+          <label class="option"><input type="radio" name="q2" value="0"><span>Только для аккаунтов руководства</span></label>
+          <label class="option"><input type="radio" name="q2" value="1"><span>Дополнительная защита, даже если пароль стал известен посторонним</span></label>
+          <label class="option"><input type="radio" name="q2" value="2"><span>Она полностью заменяет собой пароль</span></label>
+          <div class="explain">Верно: MFA — это второй рубеж защиты. Даже если пароль утёк, злоумышленник не сможет войти без второго фактора.</div>
+        </div>
+
+        <div class="question" data-correct="1">
+          <p class="question-title">3. Вам звонят и просят продиктовать код MFA "для проверки". Как реагировать?</p>
+          <label class="option"><input type="radio" name="q3" value="0"><span>Продиктовать, это стандартная процедура</span></label>
+          <label class="option"><input type="radio" name="q3" value="1"><span>Отказать — код нельзя сообщать никому и никогда</span></label>
+          <label class="option"><input type="radio" name="q3" value="2"><span>Продиктовать, если звонящий назвал ваше имя и отдел</span></label>
+          <div class="explain">Верно: код MFA — секрет только между вами и системой. Никто из легитимных сотрудников никогда не запросит его вслух.</div>
+        </div>
+
+        <div class="question" data-correct="1">
+          <p class="question-title">4. Уходя от рабочего компьютера даже ненадолго, нужно:</p>
+          <label class="option"><input type="radio" name="q4" value="0"><span>Оставить как есть — вы же скоро вернётесь</span></label>
+          <label class="option"><input type="radio" name="q4" value="1"><span>Заблокировать экран</span></label>
+          <label class="option"><input type="radio" name="q4" value="2"><span>Просто убавить яркость монитора</span></label>
+          <div class="explain">Верно: блокировка экрана занимает секунду (Win+L), а разблокированный компьютер в ваше отсутствие — прямой риск для данных компании.</div>
+        </div>
+
+
+        <div class="actions">
+          <button type="button" id="check-btn" class="btn">Проверить ответы</button>
+          <button type="button" id="retry-btn" class="btn secondary" style="display:none;">Пройти ещё раз</button>
+          <button type="button" id="next-btn" class="btn" style="display:none;">Вернуться к модулям</button>
+          <button type="button" id="finish-btn" class="btn" style="display:none;">Завершить обучение</button>
+          <span id="result" class="result"></span>
+        </div>
+        <p class="hint">Результат модуля сохраняется по ходу курса. Итог по всем модулям отправляется HR одним письмом после завершения курса (модуль 6).</p>
+      </form>
+    </div>
+
+    <div class="quiz-card" id="final-summary" style="display:none;">
+      <div class="quiz-head">
+        <h3>Курс завершён 🎉</h3>
+        <p>Ваш итоговый результат по всем пройденным модулям:</p>
+      </div>
+      <p class="final-score-big"></p>
+      <ul class="points final-breakdown"></ul>
+      <p class="final-note">Результаты отправлены HR. Спасибо за прохождение курса!</p>
+      <a href="index.html" class="btn final-home-btn">На главную</a>
+    </div>
+
+    <p class="footer-note">Есть вопросы по модулю? Напишите в чат «Onboarding» в Teams.</p>
+  </div>
+
+  <script src="course.js"></script>
+  <script>
+    CourseTracker.requireAuth(function (name) {
+      // имя уже сохранено (или было сохранено раньше) — страница используется как обычно
+    });
+
+    (function () {
+      var checkBtn = document.getElementById('check-btn');
+      var retryBtn = document.getElementById('retry-btn');
+      var nextBtn = document.getElementById('next-btn');
+      var finishBtn = document.getElementById('finish-btn');
+      var summaryBlock = document.getElementById('final-summary');
+      var quizCard = document.querySelector('.quiz-card');
+      var resultEl = document.getElementById('result');
+      var questions = document.querySelectorAll('.question');
+
+      var MODULE_ID = 'module-3';
+      var MODULE_LABEL = 'Модуль 3 — Пароли, MFA и защита устройств';
+      var IS_FINAL = false;
+
+      nextBtn.addEventListener('click', function () {
+        window.location.href = 'index.html';
+      });
+
+      finishBtn.addEventListener('click', function () {
+        finishBtn.disabled = true;
+        finishBtn.textContent = 'Отправляем…';
+        CourseTracker.submitFinalResults().then(function (summary) {
+          quizCard.style.display = 'none';
+          summaryBlock.style.display = 'block';
+          summaryBlock.querySelector('.final-score-big').textContent =
+            summary.totalCorrect + ' из ' + summary.totalQuestions + ' (' + summary.pct + '%)';
+          var listEl = summaryBlock.querySelector('.final-breakdown');
+          listEl.innerHTML = '';
+          summary.breakdown.forEach(function (row) {
+            var li = document.createElement('li');
+            li.textContent = row.label + ' — ' + row.correct + '/' + row.total;
+            listEl.appendChild(li);
+          });
+        });
+      });
+
+      checkBtn.addEventListener('click', function () {
+        var answered = 0, correct = 0;
+        questions.forEach(function (q) {
+          var qname = q.querySelector('input[type=radio]').name;
+          var selected = q.querySelector('input[name="' + qname + '"]:checked');
+          var correctIndex = q.getAttribute('data-correct');
+          var options = q.querySelectorAll('.option');
+          var explain = q.querySelector('.explain');
+
+          if (selected) {
+            answered++;
+            options.forEach(function (opt, i) {
+              var input = opt.querySelector('input');
+              opt.classList.remove('is-correct', 'is-wrong');
+              if (String(i) === correctIndex) opt.classList.add('is-correct');
+              else if (input === selected) opt.classList.add('is-wrong');
+              input.disabled = true;
+            });
+            if (String(selected.value) === correctIndex) correct++;
+            explain.classList.add('is-shown');
+          }
+        });
+
+        if (answered < questions.length) {
+          resultEl.textContent = 'Ответьте на все вопросы (' + answered + ' из ' + questions.length + ')';
+          resultEl.classList.add('is-shown');
+          return;
+        }
+
+        var pct = Math.round((correct / questions.length) * 100);
+        var passed = pct >= (CourseTracker.PASS_THRESHOLD * 100);
+        var msg = correct === questions.length
+          ? 'Отлично! ' + correct + ' из ' + questions.length + ' (100%)'
+          : pct >= 70
+            ? 'Хороший результат: ' + correct + ' из ' + questions.length + ' (' + pct + '%)'
+            : 'Результат: ' + correct + ' из ' + questions.length + ' (' + pct + '%) — рекомендуем пересмотреть материал модуля';
+
+        if (!passed) {
+          msg += '. Нужно набрать минимум 80%, чтобы перейти дальше — нажмите «Пройти ещё раз».';
+        }
+
+        resultEl.textContent = msg;
+        resultEl.classList.add('is-shown');
+        checkBtn.style.display = 'none';
+        retryBtn.style.display = 'inline-block';
+
+        CourseTracker.saveModuleResult(MODULE_ID, MODULE_LABEL, correct, questions.length);
+
+        if (passed) {
+          if (IS_FINAL) {
+            finishBtn.style.display = 'inline-block';
+          } else {
+            nextBtn.style.display = 'inline-block';
+          }
+        }
+      });
+
+      retryBtn.addEventListener('click', function () {
+        questions.forEach(function (q) {
+          q.querySelectorAll('input[type=radio]').forEach(function (input) {
+            input.checked = false;
+            input.disabled = false;
+          });
+          q.querySelectorAll('.option').forEach(function (opt) {
+            opt.classList.remove('is-correct', 'is-wrong');
+          });
+          q.querySelector('.explain').classList.remove('is-shown');
+        });
+        resultEl.classList.remove('is-shown');
+        checkBtn.style.display = 'inline-block';
+        retryBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+        finishBtn.style.display = 'none';
+      });
+    })();
+  </script>
+
+</body>
+</html>
