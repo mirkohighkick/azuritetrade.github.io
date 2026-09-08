@@ -205,8 +205,9 @@ a { color: inherit; }
 }
 .hero h1 .circled svg {
   position: absolute;
-  left: -12%;
-  top: -32%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 180%;
   height: 175%;
   overflow: visible;
